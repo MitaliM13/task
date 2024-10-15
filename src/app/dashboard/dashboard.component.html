@@ -1,0 +1,58 @@
+<div class="form-table-container">
+  
+  <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+    <div>
+      <label for="id">Id:</label>
+      <input id="id" formControlName="id" />
+      <div *ngIf="userForm.get('id')?.invalid && userForm.get('id')?.touched" class="error">
+        Id is required.
+      </div>
+    </div>
+    
+    <div>
+      <label for="name">Name:</label>
+      <input id="name" formControlName="name" />
+      <div *ngIf="userForm.get('name')?.invalid && userForm.get('name')?.touched" class="error">
+        Name is required.
+      </div>
+    </div>
+    
+    <div>
+      <label for="email">Email:</label>
+      <input id="email" formControlName="email" type="email" />
+      <div *ngIf="userForm.get('email')?.invalid && userForm.get('email')?.touched" class="error">
+        Please enter a valid email address.
+      </div>
+    </div>
+    
+    <div>
+      <label for="address">Address:</label>
+      <input id="address" formControlName="address" />
+      <div *ngIf="userForm.get('address')?.invalid && userForm.get('address')?.touched" class="error">
+        Address is required.
+      </div>
+    </div>
+
+    <button type="submit" [disabled]="userForm.invalid">Add</button>
+  </form>
+
+  
+  <table>
+    <thead> 
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Address</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of users">
+        <td>{{ item.id }}</td>
+        <td>{{ item.name }}</td>
+        <td>{{ item.email }}</td>
+        <td>{{ item.address.street }}, {{item.address.city}}, {{item.address.zipcode}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

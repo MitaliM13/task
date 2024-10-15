@@ -1,0 +1,9 @@
+<div>
+    <div>
+        <ul>
+            <li *ngFor = "let nav of navLinks" (click) = "navigateTo(nav.path)">
+                {{nav.label}}
+            </li>
+        </ul>
+    </div>
+</div>
