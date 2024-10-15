@@ -8,8 +8,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-  users: any 
-  userForm: FormGroup; 
+  users: any[] = [];
+  userForm: FormGroup;
 
   constructor(private userData: UsersDataService, private fb: FormBuilder) {
     this.userForm = this.fb.group({
@@ -26,17 +26,20 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.userData.users().subscribe((data) => {
-      this.users = data; 
+    this.userData.user().subscribe((data) => {
+      this.users = data;
       console.log(this.users);
     });
   }
 
   onSubmit(): void {
     if (this.userForm.valid) {
-      const newUser = this.userForm.value; 
-      this.users.push(newUser); 
-      this.userForm.reset(); 
+      const newUser = this.userForm.value;
+
+      this.userData.addUser(newUser).subscribe((addedUser) => {
+        this.users.push(addedUser); 
+        this.userForm.reset(); 
+      });
     }
   }
 }
