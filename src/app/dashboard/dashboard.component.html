@@ -26,23 +26,28 @@
     <button type="submit" [disabled]="userForm.invalid">Add User</button>
   </form>
 
-  <h3>User List</h3>
-  <table>
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Email</th>
-        <th>Address</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let user of users">
-        <td>{{ user.id }}</td>
-        <td>{{ user.name }}</td>
-        <td>{{ user.email }}</td>
-        <td>{{ user.address.street }}, {{ user.address.suite }}, {{ user.address.city }}, {{ user.address.zipcode }}</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+  <div class="dashboard-container">
+    <h2>User Dashboard</h2>
+    
+    
+  
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Address</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of users">
+          <td>{{ user.id }}</td>
+          <td>{{ user.name }}</td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.address.street }}, {{ user.address.city }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  

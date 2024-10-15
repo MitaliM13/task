@@ -8,7 +8,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-  users: any[] = [];
+  users: any[] = []; // Initialize as an empty array
   userForm: FormGroup;
 
   constructor(private userData: UsersDataService, private fb: FormBuilder) {
@@ -26,20 +26,17 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.userData.user().subscribe((data) => {
-      this.users = data;
+    this.userData.getUsers().subscribe((data) => {
+      this.users = data; // Subscribe to user updates
       console.log(this.users);
     });
   }
 
   onSubmit(): void {
     if (this.userForm.valid) {
-      const newUser = this.userForm.value;
-
-      this.userData.addUser(newUser).subscribe((addedUser) => {
-        this.users.push(addedUser); 
-        this.userForm.reset(); 
-      });
+      const newUser = this.userForm.value; 
+      this.userData.addUser(newUser); // Use the service method to add a new user
+      this.userForm.reset(); // Reset the form
     }
   }
 }
