@@ -27,16 +27,18 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.userData.getUsers().subscribe((data) => {
-      this.users = data; // Subscribe to user updates
+      this.users = data; 
       console.log(this.users);
-    });
+    }, (err) => {
+      console.log(err)
+    })
   }
 
   onSubmit(): void {
     if (this.userForm.valid) {
       const newUser = this.userForm.value; 
-      this.userData.addUser(newUser); // Use the service method to add a new user
-      this.userForm.reset(); // Reset the form
+      this.userData.addUser(newUser); 
+      this.userForm.reset();
     }
   }
 }

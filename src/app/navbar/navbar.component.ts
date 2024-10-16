@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import {AuthService} from '../Services/auth.service'
 
 @Component({
   selector: 'app-navbar',
@@ -9,7 +10,7 @@ import { Router } from '@angular/router';
 export class NavbarComponent {
 
 
-  constructor(private route: Router){}
+  constructor(private route: Router, private auth: AuthService){}
 
   navLinks = [
     {path: '/home', label: 'Home'},
@@ -20,6 +21,11 @@ export class NavbarComponent {
   ]
   
   navigateTo(path:string){
-    this.route.navigate([path])
+    if (path === '/logout' || path==='') {
+      this.auth.logout()
+      this.route.navigate(['/home'])
+    } else {
+      this.route.navigate([path])
+    }
   }
 }

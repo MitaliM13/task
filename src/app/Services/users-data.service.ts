@@ -1,30 +1,30 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UsersDataService {
   private url = 'https://jsonplaceholder.typicode.com/users';
-  private usersSubject = new BehaviorSubject<any[]>([]); // BehaviorSubject for user data
+  private usersSubject = new BehaviorSubject<any[]>([]); 
 
   constructor(private http: HttpClient) {
-    this.loadUsers(); // Load initial users
+    this.loadUsers(); 
   }
 
   private loadUsers(): void {
     this.http.get<any[]>(this.url).subscribe((data) => {
-      this.usersSubject.next(data); // Emit initial user data
+      this.usersSubject.next(data); 
     });
   }
 
   getUsers(): Observable<any[]> {
-    return this.usersSubject.asObservable(); // Expose the users as an observable
+    return this.usersSubject.asObservable(); 
   }
 
   addUser(newUser: any): void {
-    const currentUsers = this.usersSubject.value; // Get current users
-    this.usersSubject.next([...currentUsers, newUser]); // Push the new user and emit the new array
+    const currentUsers = this.usersSubject.value; 
+    this.usersSubject.next([...currentUsers, newUser]); 
   }
 }
