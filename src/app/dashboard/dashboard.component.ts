@@ -42,14 +42,18 @@ export class DashboardComponent implements OnInit {
   
   idValid2 : boolean = false;
   onSubmit(): void {
-    console.log("show eror ", this.showError)
     if (this.userForm.valid) {
-      const newUser = this.userForm.value; 
-      this.userData.addUser(newUser); 
-      if(this.userData.idValid==true){
-        this.idValid2 = true;
+      const newUser = this.userForm.value;
+      this.userData.addUser(newUser);
+  
+      if (this.userData.idExists) {
+        this.idValid2 = true; 
+        return; 
+      } else {
+        this.idValid2 = false; 
       }
-      console.log(this.idValid2);
+      
+      console.log("User added successfully:", newUser);
       this.userForm.reset();
     }
   }

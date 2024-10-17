@@ -26,22 +26,24 @@ export class UsersDataService {
   idValid: boolean = false;
 
   addUser(newUser: any): void {
-    const currentUsers = this.usersSubject.value; 
-
-    this.usersSubject.pipe(map(val=>{
-      this.idExists = currentUsers.some(user => user.id == newUser.id);
-      return this.idExists;
-    })).subscribe((exists) => {
-      if(exists)
-      this.idExists = true;
-    });
-    if(this.idExists){
-      this.idValid = true;
-    }
-    console.log("id exists value ", this.idExists);
+    const currentUsers = this.usersSubject.value;
+    console.log("current users ", currentUsers);
     
-    this.usersSubject.next([...currentUsers, newUser]); 
+    console.log('id to be added ', newUser.id);
+    
+    this.idExists = currentUsers.some(user => Number(user.id) === Number(newUser.id));
+    console.log("id Exists ", this.idExists);
+    
+  
+    if (this.idExists) {
+      console.log("User ID already exists:", newUser.id);
+      return; 
+    }
+  
+    this.usersSubject.next([...currentUsers, newUser]);
+    console.log("User added:", newUser);
   }
+  
 
   deleteUser(userId: number):void{
     const currentUsers = this.usersSubject.value
