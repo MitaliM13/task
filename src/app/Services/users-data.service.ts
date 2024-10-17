@@ -27,4 +27,10 @@ export class UsersDataService {
     const currentUsers = this.usersSubject.value; 
     this.usersSubject.next([...currentUsers, newUser]); 
   }
+
+  deleteUser(userId: number):void{
+    const currentUsers = this.usersSubject.value
+    const updatedUsers = currentUsers.filter(user => user.id !== userId)
+    this.usersSubject.next(updatedUsers)
+  }
 }

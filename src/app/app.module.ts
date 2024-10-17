@@ -10,7 +10,8 @@ import { ContactComponent } from './contact/contact.component';
 import { AboutComponent } from './about/about.component';
 import { LogoutComponent } from './logout/logout.component';
 import {ReactiveFormsModule} from '@angular/forms'
-import {HttpClientModule} from '@angular/common/http'
+import {HttpClientModule} from '@angular/common/http';
+import { UserTableComponent } from './user-table/user-table.component'
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import {HttpClientModule} from '@angular/common/http'
     DashboardComponent,
     ContactComponent,
     AboutComponent,
-    LogoutComponent
+    LogoutComponent,
+    UserTableComponent
   ],
   imports: [
     BrowserModule,

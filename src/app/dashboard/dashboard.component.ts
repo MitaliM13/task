@@ -8,7 +8,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-  users: any[] = []; // Initialize as an empty array
+  users: any[] = []; 
+  displayedUser: any[] = [];
   userForm: FormGroup;
 
   constructor(private userData: UsersDataService, private fb: FormBuilder) {
@@ -28,6 +29,7 @@ export class DashboardComponent implements OnInit {
   ngOnInit(): void {
     this.userData.getUsers().subscribe((data) => {
       this.users = data; 
+      this.displayedUser = [...this.users]
       console.log(this.users);
     }, (err) => {
       console.log(err)
@@ -38,7 +40,15 @@ export class DashboardComponent implements OnInit {
     if (this.userForm.valid) {
       const newUser = this.userForm.value; 
       this.userData.addUser(newUser); 
+      this.displayedUser.push(newUser);
       this.userForm.reset();
     }
+  }
+
+  deleteUser(userId: number): void {
+    console.log("before deletion:", this.displayedUser);
+    this.displayedUser = this.displayedUser.filter(user => user.id !== userId)
+    console.log('After Deletion:',this.displayedUser);
+    console.log('Original Users:',this.users);
   }
 }
