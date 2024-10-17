@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UsersDataService } from '../Services/users-data.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {  FormBuilder, FormGroup, Validators } from '@angular/forms';
+
 
 @Component({
   selector: 'app-dashboard',
@@ -14,7 +15,7 @@ export class DashboardComponent implements OnInit {
 
   constructor(private userData: UsersDataService, private fb: FormBuilder) {
     this.userForm = this.fb.group({
-      id: ['', Validators.required],
+      id: ['', [Validators.required]],
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       address: this.fb.group({
@@ -29,18 +30,18 @@ export class DashboardComponent implements OnInit {
   ngOnInit(): void {
     this.userData.getUsers().subscribe((data) => {
       this.users = data; 
-      this.displayedUser = [...this.users]
+      this.displayedUser = [...this.users];
       console.log(this.users);
     }, (err) => {
-      console.log(err)
-    })
+      console.log(err);
+    });
   }
+  
 
   onSubmit(): void {
     if (this.userForm.valid) {
       const newUser = this.userForm.value; 
       this.userData.addUser(newUser); 
-      this.displayedUser.push(newUser);
       this.userForm.reset();
     }
   }
@@ -50,5 +51,7 @@ export class DashboardComponent implements OnInit {
     this.displayedUser = this.displayedUser.filter(user => user.id !== userId)
     console.log('After Deletion:',this.displayedUser);
     console.log('Original Users:',this.users);
+    this.userData.deleteUser(userId)
   }
+
 }

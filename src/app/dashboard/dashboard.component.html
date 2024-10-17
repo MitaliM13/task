@@ -1,4 +1,3 @@
-
 <div class="dashboard-container">
   <div class="heading">
     <h2>User Dashboard</h2>
@@ -8,28 +7,58 @@
       <div class="input">
         <label for="id">ID:</label>
         <input id="id" formControlName="id" />
+        <div class="error-message" *ngIf="userForm.get('id')?.touched && userForm.get('id')?.invalid">
+          <span *ngIf="userForm.get('id')?.hasError('required')">ID is required</span>
+          <span *ngIf="userForm.get('id')?.hasError('idExists')">User ID already exists</span>
+        </div>
       </div>
+      
+
       <div class="input">
         <label for="name">Name:</label>
         <input id="name" formControlName="name" />
+        <div class="error-message" *ngIf="userForm.get('name')?.touched && userForm.get('name')?.invalid">
+          <span *ngIf="userForm.get('name')?.hasError('required')">Name is required</span>
+        </div>
       </div>
+
       <div class="input">
         <label for="email">Email:</label>
         <input id="email" formControlName="email" />
+        <div class="error-message" *ngIf="userForm.get('email')?.touched && userForm.get('email')?.invalid">
+          <span *ngIf="userForm.get('email')?.hasError('required')">Email is required</span>
+          <span *ngIf="userForm.get('email')?.hasError('email')">Invalid email format</span>
+        </div>
       </div>
+
       <div formGroupName="address" class="input">
         <label for="street">Street:</label>
         <input id="street" formControlName="street" />
+        <div class="error-message" *ngIf="userForm.get('address.street')?.touched && userForm.get('address.street')?.invalid">
+          <span *ngIf="userForm.get('address.street')?.hasError('required')">Street is required</span>
+        </div>
+
         <label for="suite">Suite:</label>
         <input id="suite" formControlName="suite" />
+        <div class="error-message" *ngIf="userForm.get('address.suite')?.touched && userForm.get('address.suite')?.invalid">
+          <span *ngIf="userForm.get('address.suite')?.hasError('required')">Suite is required</span>
+        </div>
+
         <label for="city">City:</label>
         <input id="city" formControlName="city" />
+        <div class="error-message" *ngIf="userForm.get('address.city')?.touched && userForm.get('address.city')?.invalid">
+          <span *ngIf="userForm.get('address.city')?.hasError('required')">City is required</span>
+        </div>
+
         <label for="zipcode">Zipcode:</label>
         <input id="zipcode" formControlName="zipcode" />
+        <div class="error-message" *ngIf="userForm.get('address.zipcode')?.touched && userForm.get('address.zipcode')?.invalid">
+          <span *ngIf="userForm.get('address.zipcode')?.hasError('required')">Zipcode is required</span>
+        </div>
       </div>
+
       <button type="submit" [disabled]="userForm.invalid">Add User</button>
     </form>
-    
 
     <div class="user-table">
       <table>
@@ -59,7 +88,6 @@
                 </svg>
               </button>
             </td>
-            
           </tr>
         </tbody>
       </table>
