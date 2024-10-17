@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, map, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -8,6 +8,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 export class UsersDataService {
   private url = 'https://jsonplaceholder.typicode.com/users';
   private usersSubject = new BehaviorSubject<any[]>([]); 
+  idExists: boolean=false
 
   constructor(private http: HttpClient) {
     this.loadUsers(); 
@@ -22,9 +23,23 @@ export class UsersDataService {
   getUsers(): Observable<any[]> {
     return this.usersSubject.asObservable(); 
   }
+  idValid: boolean = false;
 
   addUser(newUser: any): void {
     const currentUsers = this.usersSubject.value; 
+
+    this.usersSubject.pipe(map(val=>{
+      this.idExists = currentUsers.some(user => user.id == newUser.id);
+      return this.idExists;
+    })).subscribe((exists) => {
+      if(exists)
+      this.idExists = true;
+    });
+    if(this.idExists){
+      this.idValid = true;
+    }
+    console.log("id exists value ", this.idExists);
+    
     this.usersSubject.next([...currentUsers, newUser]); 
   }
 

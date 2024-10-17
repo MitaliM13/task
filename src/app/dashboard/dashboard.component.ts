@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UsersDataService } from '../Services/users-data.service';
-import {  FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, ValidationErrors, ValidatorFn, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 
 @Component({
@@ -12,6 +12,7 @@ export class DashboardComponent implements OnInit {
   users: any[] = []; 
   displayedUser: any[] = [];
   userForm: FormGroup;
+  showError!: boolean; 
 
   constructor(private userData: UsersDataService, private fb: FormBuilder) {
     this.userForm = this.fb.group({
@@ -28,6 +29,8 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.showError =  this.userData.idExists
+
     this.userData.getUsers().subscribe((data) => {
       this.users = data; 
       this.displayedUser = [...this.users];
@@ -37,11 +40,16 @@ export class DashboardComponent implements OnInit {
     });
   }
   
-
+  idValid2 : boolean = false;
   onSubmit(): void {
+    console.log("show eror ", this.showError)
     if (this.userForm.valid) {
       const newUser = this.userForm.value; 
       this.userData.addUser(newUser); 
+      if(this.userData.idValid==true){
+        this.idValid2 = true;
+      }
+      console.log(this.idValid2);
       this.userForm.reset();
     }
   }
@@ -53,5 +61,4 @@ export class DashboardComponent implements OnInit {
     console.log('Original Users:',this.users);
     this.userData.deleteUser(userId)
   }
-
 }
