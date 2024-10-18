@@ -18,6 +18,7 @@ export class NavbarComponent {
     {path: '/contact', label: 'Contact'},
     {path: '/about', label: 'About'},
     {path: '/logout', label: 'Logout'},
+    {path: '/insight', label: 'Insight'}
   ]
   
   navigateTo(path:string){

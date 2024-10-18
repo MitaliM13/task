@@ -6,6 +6,8 @@ import { ContactComponent } from './contact/contact.component';
 import { AboutComponent } from './about/about.component';
 import { LogoutComponent } from './logout/logout.component';
 import { AuthGuard } from './guards/auth.guard';
+import { InsightModule } from './insight/insight.module';
+
 
 const routes: Routes = [
   {path: 'home', component: HomeComponent},
@@ -13,6 +15,7 @@ const routes: Routes = [
   {path: 'contact', component: ContactComponent},
   {path: 'about', component: AboutComponent},
   {path: 'logout', component: LogoutComponent},
+  { path: 'insight', loadChildren: () => import('./insight/insight.module').then(m => m.InsightModule) },
   {path: '', redirectTo: '/home', pathMatch: 'full'},
   {path: '**', redirectTo: '/home'}
 ];
