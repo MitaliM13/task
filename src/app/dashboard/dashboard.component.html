@@ -9,9 +9,12 @@
         <input id="id" formControlName="id" />
         <div class="error-message" *ngIf="userForm.get('id')?.touched && userForm.get('id')?.invalid">
           <span *ngIf="userForm.get('id')?.hasError('required')">ID is required</span>
-          <span *ngIf="idValid2" style="color: red;"></span>
+          <span *ngIf="showError && !userForm.get('id')?.hasError('required')" style="color: red;">
+            ID already exists. Please enter a unique ID.
+          </span>
         </div>
       </div>
+      
       
 
       <div class="input">
@@ -58,10 +61,12 @@
         </div>
       </div>
 
-      <button type="submit" [disabled]="userForm.invalid || idValid2">Add User</button>
-<div class="error-message" *ngIf="idValid2">
-  <span style="color: red;">User ID already exists</span>
-</div>
+      <button type="submit" [disabled]="userForm.invalid || showError">Add User</button>
+
+      <div class="error-message" *ngIf="showError">
+        <span style="color: red;">User ID already exists. Please enter a unique ID.</span>
+      </div>
+      
 
     </form>
 
